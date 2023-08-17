@@ -5,7 +5,7 @@ package ie.slegras.solitaire.android;
  */
 
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import androidx.fragment.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,6 +20,11 @@ public class CustomDialogBox extends DialogFragment {
 
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState ) {
         View view= inflater.inflate(R.layout.custom, container);
+        App app = (App) getActivity().getApplication();
+        if(app.bgColor != null){
+            view.setBackgroundColor(app.bgColor);
+        }
+
         yesButton = (Button) view.findViewById(R.id.yes);
         noButton = (Button) view.findViewById(R.id.no);
 

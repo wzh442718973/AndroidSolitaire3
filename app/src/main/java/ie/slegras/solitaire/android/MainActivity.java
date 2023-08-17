@@ -1,10 +1,17 @@
 package ie.slegras.solitaire.android;
 
+import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.MotionEventCompat;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentManager;
+import androidx.core.view.MotionEventCompat;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.Window;
 
@@ -28,6 +35,57 @@ public class MainActivity extends AppCompatActivity {
     private Panel panel;
     private Game game;
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        try{
+            MenuItem version = menu.findItem(R.id.action_version);
+            version.setTitle("version:" + getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
+        }catch (Throwable e){
+
+        }
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        final int menuId = item.getItemId();
+        if(menuId == R.id.action_restart){
+            createAndShowAlertDialog();
+        }else if(menuId == R.id.action_exit){
+            AlertDialog dlg = new AlertDialog.Builder(this, R.style.DlgTheme).setTitle(R.string.exit_app).setMessage(R.string.exit_confirm).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                    System.exit(0);
+                }
+            }).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            }).create();
+            dlg.show();
+        }else if(menuId == R.id.action_setting){
+            ColorDialog dlg = new ColorDialog(this);
+            dlg.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    panel.invalidate();
+                }
+            });
+            dlg.show();
+        }
+        return true;
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         int action = MotionEventCompat.getActionMasked(e);
@@ -41,10 +99,10 @@ public class MainActivity extends AppCompatActivity {
             float height = panel.getRealHeight();
             float xMinNew = width - height / 8.0f;
             float yMinNew = height - height / 8.0f;
-            if (x > xMinNew && y > yMinNew) {
-                createAndShowAlertDialog();
-                return false;
-            }
+//            if (x > xMinNew && y > yMinNew) {
+//                createAndShowAlertDialog();
+//                return false;
+//            }
 
             panel.receiveTouchEvent(x, y);
             setContentView(panel);
@@ -99,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+
         Game gameLoaded = read();
         if (gameLoaded != null) {
             panel.setGame(gameLoaded);

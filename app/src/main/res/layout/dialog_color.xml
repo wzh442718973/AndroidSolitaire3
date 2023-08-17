@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/win_bg"
+    android:minWidth="560dp"
+    >
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="#fff"
+        android:text="BackgroundColor"
+        android:textSize="34sp"
+        android:gravity="center"
+        android:id="@+id/title"/>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        android:layout_marginTop="15dp"
+        android:textColor="#fff"
+        android:background="#000"
+        android:text="color"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:id="@+id/bg_color"/>
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TableRow android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="horizontal"
+            android:padding="4dp">
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R"
+                android:textSize="25sp"
+                android:gravity="center"/>
+            <SeekBar
+                android:min="0"
+                android:max="255"
+                android:progress="0"
+                android:id="@+id/color_r"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="match_parent" />
+        </TableRow>
+
+        <TableRow android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="horizontal"
+            android:padding="4dp">
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="G"
+                android:textSize="25sp"
+                android:gravity="center"/>
+
+            <SeekBar
+                android:id="@+id/color_g"
+                android:min="0"
+                android:max="255"
+                android:progress="0"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="match_parent" />
+        </TableRow>
+
+        <TableRow android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="horizontal"
+            android:padding="4dp">
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="B"
+                android:textSize="25sp"
+                android:gravity="center"/>
+
+            <SeekBar
+                android:id="@+id/color_b"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="match_parent"
+                android:progress="0"
+                android:min="0"
+                android:max="255"/>
+
+        </TableRow>
+    </TableLayout>
+
+
+
+
+
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="48dp"
+
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:text="@android:string/cancel"/>
+        <Button
+            android:id="@+id/reset"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="48dp"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:text="reset"/>
+        <Button
+            android:id="@+id/ok"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="48dp"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:text="@android:string/ok"/>
+    </LinearLayout>
+
+</LinearLayout>

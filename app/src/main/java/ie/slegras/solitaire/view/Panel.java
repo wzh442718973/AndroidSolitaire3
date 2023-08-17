@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceView;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Deque;
 
 import ie.slegras.solitaire.R;
+import ie.slegras.solitaire.android.App;
 import ie.slegras.solitaire.model.Card;
 import ie.slegras.solitaire.model.Deck;
 import ie.slegras.solitaire.model.Game;
@@ -33,7 +35,6 @@ public class Panel extends SurfaceView {
     private ArrayList<Bitmap> bitmaps = new ArrayList<>();
     private Bitmap missing;
     private Bitmap lost;
-    private Bitmap newGame;
     private Bitmap wonGame;
     private Matrix positionSpade;
     private Matrix positionDiamond;
@@ -50,7 +51,6 @@ public class Panel extends SurfaceView {
     private Matrix positionPile5;
     private Matrix positionPile6;
     private Matrix positionPile7;
-    private Matrix positionNew;
     private Matrix positionTextGameLost;
     private float width;
     private float height;
@@ -153,7 +153,6 @@ public class Panel extends SurfaceView {
         bitmaps.add(BitmapFactory.decodeResource(getResources(), R.drawable.clubs13));
         missing = BitmapFactory.decodeResource(getResources(), R.drawable.green2);
         lost = BitmapFactory.decodeResource(getResources(), R.drawable.lost);
-        newGame = BitmapFactory.decodeResource(getResources(), R.drawable.newgame);
         wonGame = BitmapFactory.decodeResource(getResources(), R.drawable.won);
     }
 
@@ -174,7 +173,6 @@ public class Panel extends SurfaceView {
         positionPile6 = new Matrix();
         positionPile7 = new Matrix();
         positionTextGameLost = new Matrix();
-        positionNew = new Matrix();
 
         float unityStep = 1.3f * width / 10.0f;
         float unityMin = width / 30.0f;
@@ -231,11 +229,6 @@ public class Panel extends SurfaceView {
         tmp.postTranslate(width / 2.0f - lost.getWidth() * scale / 2.0f, height - height / 4.0f);
         positionTextGameLost.set(tmp);
 
-        tmp = new Matrix();
-        scale = height / (12.0f * newGame.getHeight());
-        tmp.postScale(scale, scale);
-        tmp.postTranslate(width - height / 8.0f, height - height / 8.0f);
-        positionNew.set(tmp);
     }
 
     private void initPositionForListener(float unityMin, float unityStep, float unityBase) {
@@ -314,12 +307,19 @@ public class Panel extends SurfaceView {
         } else if(artificialIntelligence.lookIfGameWon(game)) {
             canvas.drawBitmap(wonGame, positionTextGameLost, null);
         }
-        canvas.drawBitmap(newGame, positionNew, null);
     }
 
     private void displayCards(Canvas canvas) {
-        canvas.drawColor(getResources().getColor(R.color.colorPrimary));
+        App app = (App) getContext().getApplicationContext();
+        if(app.bgColor != null){
+//            canvas.drawColor(getResources().getColor(R.color.colorPrimary));
+            canvas.drawColor(app.bgColor);
+        }else {
+            Drawable bg = getResources().getDrawable(R.drawable.win_bg);
+            bg.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
 
+            bg.draw(canvas);
+        }
         //UP
         Pile[] validatedCards = game.getBoard().getValidatedCards();
         drawPositionForValidated(canvas, validatedCards, positionSpade, 0);

@@ -5,4 +5,15 @@
     <string name="new_question">Start a new game?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+
+
+    <string name="exit_app">Exit App?</string>
+    <string name="exit_confirm">Confirm exit game!!!</string>
+
+
+    <string name="menu_pause">Pause</string>
+    <string name="menu_continue">Continue</string>
+    <string name="menu_restart">Restart</string>
+    <string name="menu_setting">Setting</string>
+    <string name="menu_exit">Exit</string>
 </resources>
